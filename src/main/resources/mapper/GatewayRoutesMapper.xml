@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangmiyi.future.gateway.dao.GatewayRoutesMapper">
+
+
+  <update id="updateByRouteId" parameterType="com.tangmiyi.future.gateway.pojo.GatewayRoutesDO">
+    update gateway_routes
+    set predicates = #{record.predicates},
+        filters = #{record.filters},
+        route_uri = #{record.routeUri},
+        route_order = #{record.routeOrder},
+        route_version = #{record.routeVersion},
+        gateway_service = #{record.gatewayService}
+    where route_id = #{record.routeId}
+  </update>
+
+  <delete id="deleteByRouteId" parameterType="String">
+    delete from gateway_routes where route_id = #{routeId}
+  </delete>
+
+  <select id="selectByService" parameterType="String" resultType="com.tangmiyi.future.gateway.pojo.GatewayRoutesDO">
+    select * from gateway_routes where gateway_service = #{gatewayService}
+  </select>
+
+</mapper>

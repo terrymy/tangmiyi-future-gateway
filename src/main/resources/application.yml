@@ -1,0 +1,25 @@
+server:
+  port: 9191
+
+logging:
+  file: future-gateway-9191.log
+  level:
+    org.springframework.boot.env.PropertySourcesLoader: TRACE
+    org.springframework.web: INFO
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8888/eureka/ #注册发现服务（2/3）
+  instance:
+    hostname: ${spring.cloud.client.ip-address}
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+
+mybatis:
+  type-aliases-package: com.tangmiyi.future.*.pojo
+  mapper-locations: classpath:mapper/*.xml
+  #配置驼峰下划线
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
