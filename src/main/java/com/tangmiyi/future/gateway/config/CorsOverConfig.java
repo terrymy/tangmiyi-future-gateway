@@ -1,14 +1,10 @@
 package com.tangmiyi.future.gateway.config;
 
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.cloud.gateway.discovery.DiscoveryClientRouteDefinitionLocator;
-import org.springframework.cloud.gateway.discovery.DiscoveryLocatorProperties;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.codec.ServerCodecConfigurer;
-import org.springframework.http.codec.support.DefaultServerCodecConfigurer;
 import org.springframework.web.cors.reactive.CorsUtils;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
@@ -17,7 +13,7 @@ import org.springframework.web.server.WebFilterChain;
  * 解决跨域问题
  */
 @Configuration
-public class CorsConfig {
+public class CorsOverConfig {
 
 	private static final String MAX_AGE = "18000L";
 
@@ -49,22 +45,13 @@ public class CorsConfig {
 		};
 	}
 
-	@Bean
-	public ServerCodecConfigurer serverCodecConfigurer() {
-		return new DefaultServerCodecConfigurer();
-	}
-
-	@Bean
-	public DiscoveryLocatorProperties discoveryLocatorProperties() {
-		return new DiscoveryLocatorProperties();
-	}
-
-	/**
-	 * 如果使用了注册中心（如：Eureka），进行控制则需要增加如下配置
-	 */
-	@Bean
-	public org.springframework.cloud.gateway.route.RouteDefinitionLocator discoveryClientRouteDefinitionLocator(DiscoveryClient discoveryClient,
-                                                                                                                DiscoveryLocatorProperties properties) {
-		return new DiscoveryClientRouteDefinitionLocator(discoveryClient, properties);
-	}
+//	@Bean
+//	public ServerCodecConfigurer serverCodecConfigurer() {
+//		return new DefaultServerCodecConfigurer();
+//	}
+//
+//	@Bean
+//	public DiscoveryLocatorProperties discoveryLocatorProperties() {
+//		return new DiscoveryLocatorProperties();
+//	}
 }

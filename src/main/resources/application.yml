@@ -2,7 +2,8 @@ server:
   port: 9191
 
 logging:
-  file: future-gateway-9191.log
+  file:
+    name: future-gateway-9191.log
   level:
     org.springframework.boot.env.PropertySourcesLoader: TRACE
     org.springframework.web: INFO
