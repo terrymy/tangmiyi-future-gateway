@@ -41,4 +41,6 @@ public class GatewayRouteDefinition {
      * 版本号
      */
     private Integer routeVersion;
+
+    private Integer enabled;
 }

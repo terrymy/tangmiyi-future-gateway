@@ -1,24 +1,29 @@
+server:
+  port: 9191
+
+logging:
+  file:
+    name: future-gateway-9191.log
+  level:
+    org.springframework.boot.env.PropertySourcesLoader: TRACE
+    org.springframework.web: INFO
+
 spring:
   application:
     name: future-gateway
   profiles:
-    active: '@app.active@'
+    active: @app.active@
   cloud:
-    config:
-      label: master
-      uri: http://localhost:8000 #配置中心服务（1/3）
-      name: ${spring.application.name}
-      profile: ${spring.profiles.active}
     gateway:
       discovery:
         locator:
           enabled: true #服务以serverId转发到具体的服务实例
           lowerCaseServiceId: true  #serverId开启识别小写
-#      routes:
-#        - id: jd_route
-#          uri: http://jd.com:80/
-#          predicates:
-#            - Path=/jd
+  #      routes:
+  #        - id: jd_route
+  #          uri: http://jd.com:80/
+  #          predicates:
+  #            - Path=/jd
 
   datasource:
     url: jdbc:mysql://${future.gateway.host}/tangmiyi_configserver?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
@@ -26,25 +31,18 @@ spring:
     password: ${future.gateway.password}
     driver-class-name: com.mysql.jdbc.Driver
 
-hystrix:
-  threadpool:
-    default:
-      coreSize: 100 #并发执行的最大线程数，默认10
-      maxQueueSize: 200 #BlockingQueue的最大队列数
-      queueSizeRejectionThreshold: 40 #即使maxQueueSize没有达到，达到queueSizeRejectionThreshold该值后，请求也会被拒绝
-  command:
-    default:
-      execution:
-        timeout:
-          enabled: false
-        isolation:
-          thread:
-            timeoutInMilliseconds: 10000
-          strategy: THREAD
-
 feign:
   hystrix:
     enabled: true # 启动 feign 的断路器功能
+
+mybatis:
+  type-aliases-package: com.tangmiyi.future.*.pojo
+  mapper-locations: classpath:mapper/*.xml
+  #配置驼峰下划线
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 ribbon:
   ReadTimeout: 10000
@@ -79,3 +77,4 @@ management:
       enabled: false
 
 #查看路由信息localhost:9191/actuator/gateway/routes
+

@@ -4,6 +4,7 @@ import com.tangmiyi.future.gateway.pojo.GatewayRouteDefinition;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +27,13 @@ public class GatewayRouteListSingle {
 
     private GatewayRouteListSingle() {
 
+    }
+
+    public List<GatewayRouteDefinition> getGatewayRouteDefinitionList() {
+        if(gatewayRouteDefinitionList == null){
+            gatewayRouteDefinitionList = new ArrayList<>();
+        }
+        return gatewayRouteDefinitionList;
     }
 
     public static synchronized GatewayRouteListSingle getInstance() {

@@ -25,16 +25,16 @@ public class DynamicRouteScheduling {
     @Autowired
     private DynamicRouteServiceImpl dynamicRouteService;
 
-    @Value("${spring.profiles.active}")
-    private String active;
+    @Value("${spring.application.name}")
+    private String applicationName;
 
     /**
      * 每60秒执行一次,如果版本号不相等则获取最新路由信息并更新网关路由
      */
-    @Scheduled(cron = "*/60 * * * * ?")
+    @Scheduled(cron = "*/30 * * * * ?")
     public void getDynamicRouteInfo(){
-        // 先拉取版本信息，如果版本号不想等则更新路由
-        List<GatewayRouteDefinition> lasts = gatewayRoutesService.getRouteDefinitions(active);
+        // 先拉取版本信息，如果版本号不相等则更新路由
+        List<GatewayRouteDefinition> lasts = gatewayRoutesService.getRouteDefinitions(applicationName);
         GatewayRouteListSingle gatewayRouteListSingle = GatewayRouteListSingle.getInstance();
         List<GatewayRouteDefinition> currents = gatewayRouteListSingle.getGatewayRouteDefinitionList();
         // 取差集lasts-currents

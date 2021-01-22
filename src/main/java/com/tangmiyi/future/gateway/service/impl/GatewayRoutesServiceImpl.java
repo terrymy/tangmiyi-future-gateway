@@ -25,15 +25,16 @@ public class GatewayRoutesServiceImpl implements GatewayRoutesService {
     private GatewayRoutesMapper gatewayRoutesMapper;
 
     private GatewayRoutesDO dtoToDO(GatewayRouteDefinition gatewayRouteDefinition){
-        GatewayRoutesDO gatewayRoutesEntity = new GatewayRoutesDO();
-        gatewayRoutesEntity.setRouteOrder(gatewayRouteDefinition.getOrder());
-        gatewayRoutesEntity.setRouteId(gatewayRouteDefinition.getId());
-        gatewayRoutesEntity.setFilters(JSON.toJSONString(gatewayRouteDefinition.getFilters()));
-        gatewayRoutesEntity.setRouteUri(gatewayRouteDefinition.getUri());
-        gatewayRoutesEntity.setPredicates(JSON.toJSONString(gatewayRouteDefinition.getPredicates()));
-        gatewayRoutesEntity.setGatewayService(gatewayRouteDefinition.getGatewayService());
-        gatewayRoutesEntity.setRouteVersion(gatewayRouteDefinition.getRouteVersion());
-        return gatewayRoutesEntity;
+        GatewayRoutesDO gatewayRoutesDO = new GatewayRoutesDO();
+        gatewayRoutesDO.setRouteOrder(gatewayRouteDefinition.getOrder());
+        gatewayRoutesDO.setRouteId(gatewayRouteDefinition.getId());
+        gatewayRoutesDO.setFilters(JSON.toJSONString(gatewayRouteDefinition.getFilters()));
+        gatewayRoutesDO.setRouteUri(gatewayRouteDefinition.getUri());
+        gatewayRoutesDO.setPredicates(JSON.toJSONString(gatewayRouteDefinition.getPredicates()));
+        gatewayRoutesDO.setGatewayService(gatewayRouteDefinition.getGatewayService());
+        gatewayRoutesDO.setRouteVersion(gatewayRouteDefinition.getRouteVersion());
+        gatewayRoutesDO.setEnabled(gatewayRouteDefinition.getEnabled());
+        return gatewayRoutesDO;
     }
 
 

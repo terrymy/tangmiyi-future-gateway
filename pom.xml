@@ -29,7 +29,15 @@
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Hoxton.SR7</version>
+				<version>Hoxton.SR8</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+				<version>2.2.3.RELEASE</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -46,18 +54,28 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-config-client</artifactId>-->
+<!--		</dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
+<!--        </dependency>-->
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-client</artifactId>
+			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+		</dependency>
+
         <!-- web参数信息监控模块 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -218,6 +236,7 @@
 			<id>dev</id>
 			<properties>
 				<app.active>dev</app.active>
+				<nacos.namespace>4dd29b17-bbde-4510-8332-69dc0c1ba94b</nacos.namespace>
 			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -227,6 +246,7 @@
 			<id>uat</id>
 			<properties>
 				<app.active>uat</app.active>
+				<nacos.namespace>75aa67f6-2865-4f41-a3e4-4f212daf1ff6</nacos.namespace>
 				<app.tag.timestamp>-${maven.build.timestamp}</app.tag.timestamp>
 			</properties>
 		</profile>
@@ -234,6 +254,7 @@
 			<id>prod</id>
 			<properties>
 				<app.active>prod</app.active>
+				<nacos.namespace>1b14ad54-1efd-4236-b37e-368e1c35c939</nacos.namespace>
 				<app.tag.timestamp>-${maven.build.timestamp}</app.tag.timestamp>
 			</properties>
 		</profile>
