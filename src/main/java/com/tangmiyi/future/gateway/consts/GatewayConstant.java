@@ -18,7 +18,7 @@ public class GatewayConstant {
     /**
      * swagger地址
      */
-    public final static String SWAGGERDO_PATH_DOC = "/**/v2/api-docs";
+    public final static String SWAGGERDO_PATH_DOC = "/**/v3/api-docs";
 
     /**
      * manager登录路径

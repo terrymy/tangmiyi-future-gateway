@@ -1,6 +1,6 @@
 package com.tangmiyi.future.gateway.filter;
 
-import com.tangmiyi.future.gateway.config.GatewaySwaggerConfig;
+import com.tangmiyi.future.gateway.config.GatewaySwaggerProvider;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -17,10 +17,10 @@ public class GwSwaggerHeaderFilter extends AbstractGatewayFilterFactory {
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
             String path = request.getURI().getPath();
-            if (!StringUtils.endsWithIgnoreCase(path, GatewaySwaggerConfig.API_URI)) {
+            if (!StringUtils.endsWithIgnoreCase(path, GatewaySwaggerProvider.API_URI)) {
                 return chain.filter(exchange);
             }
-            String basePath = path.substring(0, path.lastIndexOf(GatewaySwaggerConfig.API_URI));
+            String basePath = path.substring(0, path.lastIndexOf(GatewaySwaggerProvider.API_URI));
             ServerHttpRequest newRequest = request.mutate().header(HEADER_NAME, basePath).build();
             ServerWebExchange newExchange = exchange.mutate().request(newRequest).build();
             return chain.filter(newExchange);
@@ -28,3 +28,4 @@ public class GwSwaggerHeaderFilter extends AbstractGatewayFilterFactory {
     }
 }
 // http://localhost:9191/swagger-ui.html
+// http://localhost:9191/swagger-ui/index.html

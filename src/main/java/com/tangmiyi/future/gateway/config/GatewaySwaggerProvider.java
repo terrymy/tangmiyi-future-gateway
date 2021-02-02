@@ -19,9 +19,9 @@ import java.util.List;
 @Component
 @Primary
 @AllArgsConstructor
-public class GatewaySwaggerConfig implements SwaggerResourcesProvider {
+public class GatewaySwaggerProvider implements SwaggerResourcesProvider {
 
-    public static final String API_URI = "/v2/api-docs";
+    public static final String API_URI = "/v3/api-docs";
 
     @Override
     public List<SwaggerResource> get() {
@@ -45,7 +45,7 @@ public class GatewaySwaggerConfig implements SwaggerResourcesProvider {
         SwaggerResource swaggerResource = new SwaggerResource();
         swaggerResource.setName(name);
         swaggerResource.setLocation(location);
-        swaggerResource.setSwaggerVersion("2.0");
+        swaggerResource.setSwaggerVersion("3.0");
         return swaggerResource;
     }
 }
