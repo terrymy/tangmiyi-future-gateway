@@ -14,16 +14,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
@@ -38,15 +37,13 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Component
 @Slf4j
+@RefreshScope
 public class GwGlobalFilter implements GlobalFilter, Ordered {
 
     /**
      * sign过期时间毫秒
      */
     private final static long SIGN_TIME_OUT = 15 * 60 * 1000L;
-
-    @Autowired
-    private AntPathMatcher antPathMacher;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -109,14 +106,13 @@ public class GwGlobalFilter implements GlobalFilter, Ordered {
         // Route gatewayUrl = exchange.getRequiredAttribute(ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR);
         // URI uri = gatewayUrl.getUri();
         // 登录或swagger不做任何校验
-        if(request.getPath().value().contains(GatewayConstant.MANAGER_PATH_LOGIN) || antPathMacher.match(GatewayConstant.SWAGGERDO_PATH_DOC, request.getPath().value())){
+        if(request.getPath().value().contains(GatewayConstant.MANAGER_PATH_LOGIN) ||
+                request.getPath().value().contains(GatewayConstant.SWAGGERDO_PATH_DOC)){
             return chain.filter(exchange);
         }
 
-        if (antPathMacher.match(GatewayConstant.REQUEST_PATH_ACTUATOR, request.getPath().value())
-                || antPathMacher.match(GatewayConstant.REQUEST_PATH_OPEN, request.getPath().value())) {
-
-
+        if (request.getPath().value().contains(GatewayConstant.REQUEST_PATH_ACTUATOR)
+                || request.getPath().value().contains(GatewayConstant.REQUEST_PATH_OPEN)) {
             String sign = StringUtils.isNotBlank(headers.getFirst(GatewayConstant.REQUEST_PARAMETER_SIGN)) ? headers.getFirst(GatewayConstant.REQUEST_PARAMETER_SIGN) : paramters.getFirst(GatewayConstant.REQUEST_PARAMETER_SIGN);
             String stamp = StringUtils.isNotBlank(headers.getFirst(GatewayConstant.REQUEST_PARAMETER_STAMP)) ? headers.getFirst(GatewayConstant.REQUEST_PARAMETER_STAMP) : paramters.getFirst(GatewayConstant.REQUEST_PARAMETER_STAMP);
             String nonce = StringUtils.isNotBlank(headers.getFirst(GatewayConstant.REQUEST_PARAMETER_NONCE)) ? headers.getFirst(GatewayConstant.REQUEST_PARAMETER_NONCE) : paramters.getFirst(GatewayConstant.REQUEST_PARAMETER_NONCE);
@@ -183,11 +179,6 @@ public class GwGlobalFilter implements GlobalFilter, Ordered {
     @Override
     public int getOrder() {
         return Ordered.LOWEST_PRECEDENCE;
-    }
-
-    @Bean
-    public AntPathMatcher antPathMatcher() {
-        return new AntPathMatcher();
     }
 
     public static void main(String[] args) {

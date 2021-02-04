@@ -8,17 +8,17 @@ public class GatewayConstant {
     /**
      * actuator路径
      */
-    public final static String REQUEST_PATH_ACTUATOR = "/actuator/**";
+    public final static String REQUEST_PATH_ACTUATOR = "/actuator";
 
     /**
      * open路径
      */
-    public final static String REQUEST_PATH_OPEN = "/**/open/**";
+    public final static String REQUEST_PATH_OPEN = "/open";
 
     /**
      * swagger地址
      */
-    public final static String SWAGGERDO_PATH_DOC = "/**/v3/api-docs";
+    public final static String SWAGGERDO_PATH_DOC = "/v3/api-docs";
 
     /**
      * manager登录路径

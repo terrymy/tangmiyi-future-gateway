@@ -31,10 +31,6 @@ spring:
     password: ${future.gateway.password}
     driver-class-name: com.mysql.jdbc.Driver
 
-feign:
-  hystrix:
-    enabled: true # 启动 feign 的断路器功能
-
 mybatis:
   type-aliases-package: com.tangmiyi.future.*.pojo
   mapper-locations: classpath:mapper/*.xml
@@ -43,16 +39,6 @@ mybatis:
     map-underscore-to-camel-case: true
     cache-enabled: false
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
-ribbon:
-  ReadTimeout: 10000
-  ConnectTimeout: 12000
-  MaxAutoRetries: 3
-  MaxAutoRetriesNextServer: 3
-  OkToRetryOnAllOperations: true
-
-okhttp:
-  enable: true
 
 #端点信息监控
 management:
