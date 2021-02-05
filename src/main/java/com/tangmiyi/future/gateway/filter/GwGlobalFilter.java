@@ -105,6 +105,12 @@ public class GwGlobalFilter implements GlobalFilter, Ordered {
         }
         // Route gatewayUrl = exchange.getRequiredAttribute(ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR);
         // URI uri = gatewayUrl.getUri();
+
+        // 本地开发环境不拦截
+        if(active.equals(GatewayConstant.ENV_DEV)){
+            return chain.filter(exchange);
+        }
+
         // 登录或swagger不做任何校验
         if(request.getPath().value().contains(GatewayConstant.MANAGER_PATH_LOGIN) ||
                 request.getPath().value().contains(GatewayConstant.SWAGGERDO_PATH_DOC)){
